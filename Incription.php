@@ -1,21 +1,15 @@
 <?php 
     ob_start();
-    if (!empty($_POST['nom']) && !empty($_POST['prenom'] )){
+    if (!empty($_POST['nom']) && !empty($_POST['prenom'] && !empty($_POST['MdP'] ))){
 
     $nom = $_POST['nom'];
     $prenom = $_POST['prenom'];
+    $mdp = sha1($_POST['MdP']);
     
-    $RequestCreate = $bdd->prepare('INSERT INTO users(nom,prenom)
-                                    VALUES(?,?)');
-    $data = $RequestCreate->execute(array($nom,$prenom));
+    $RequestCreate = $bdd->prepare('INSERT INTO users(nom,prenom,MdP)
+                                    VALUES(?,?,?)');
+    $data = $RequestCreate->execute(array($nom,$prenom,$mdp));
     }
-
-    while ($data = $requestRead->fetch()) {
-    echo $data['Titre'] . ' ' 
-    . $data['Auteur'] . ' '
-    . $data['Genre'] . ' '
-    . $data['Duree'] . ' ';
-    };  
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +27,8 @@
         <p>Prenom</p>
         <input type="text" name="prenom" placeholder="Prénom">
         <p>Mot de passe</p>
-        <input type="text" name="Mdp" placeholder="Mot de passe">
+        <input type="password" name="MpD" placeholder="Mot de passe">
+        <button type="submit">Enregistrer</button>
         
         
     </form>
